@@ -1,34 +1,40 @@
 // use D3 library to read in samples.json
-function demographicInfo(){
+function demographicInfo(sample){
     
-    d3.json("/data/samples.json").then((data) => {
-            console.log(data);
-              
+    // fetch the metadata using d3.json
+    d3.json("data/samples.json").then((data) => {
+            //console.log(data);
+               
         var metaData = data.metadata;
-            console.log(metaData);
-        
-        var metaDataID = metaData.map(item => item.id);
-            console.log(metaDataID);    
-
+            //console.log(metaData);
+          
+        // filter metadataID for one or more results
+        var metaDataID = metaData.filter(item => item.id == sample);
+            //console.log(metaDataID);    
+  
+         // store and select #sample-metadata using d3    
         var metaDataSelector = d3.select("#sample-metadata");
-        
+          
+        // clear any existing metada
         metaDataSelector.html(""); 
-
-        Object.entries(metaData[0]).forEach(([key, value]) => {
+  
+        // Add each key and value pair to metaDataSelector
+        Object.entries(metaDataID[0]).forEach(([key, value]) => {
             metaDataSelector.append("p").text(`${key.toUpperCase()} : ${value}`);
+
         });
     });
 };
 
 // drop down menu
 function DropDownMenu() {
-    d3.json("/data/samples.json").then((data) => {
+    d3.json("data/samples.json").then((data) => {
         console.log(data);
 
     var metaDataID = data.metadata;
 
     var metaDataIDs = metaDataID.map(item => item.id);
-        console.log(metaDataIDs); 
+        // console.log(metaDataIDs); 
     
     var results = d3.select("#selDataset");
 
@@ -40,7 +46,6 @@ function DropDownMenu() {
 
 // build charts
 function buildPlot(sample){
-
     d3.json("data/samples.json").then((data) => {
         samples = data.samples;
         //console.log(samples);
@@ -72,7 +77,7 @@ function buildPlot(sample){
                 color: 'rgb(142,124,195)',
                 //color: otu_ids,
               }
-          };
+            };
         
           var data = [barchart];
 
@@ -92,38 +97,39 @@ function buildPlot(sample){
 
           Plotly.newPlot("bar", data, layout);
 
-// // bubble chart
-//           var bubblechart = {
-//             x: otu_ids,
-//             y: sample_values,
-//             text: otu_labels,
-//             type: "scatter",
-//             mode: 'markers',
-//             marker: {
-//                     size: sample_values,
-//                     color: otu_ids, 
-//                     colorscale: "Rainbow"              
-//             }
-//           };
+// bubble chart
+          var bubblechart = {
+            x: otu_ids,
+            y: sample_values,
+            text: otu_labels,
+            type: "scatter",
+            mode: 'markers',
+            marker: {
+                    size: sample_values,
+                    color: otu_ids, 
+                    colorscale: "Rainbow"              
+            }
+          };
         
-//           var data = [bubblechart];
+          var data = [bubblechart];
 
-//           var layout = {
-//             title: "<b>Belly Button Bacteria</b> <br> Samples per OTU ID</b>",
-//             titlefont: {family: 'Arial, Helvetica, sans-serif'},
-//             margin: {
-//                 l: 100,
-//                 r: 100,
-//                 t: 120,
-//                 b: 50
-//               },
-//             xaxis: {title:"OTU ID"},
-//             yaxis: {title:"Sample Values"},
-//           };
+          var layout = {
+            title: "<b>Belly Button Bacteria</b> <br> Samples per OTU ID</b>",
+            titlefont: {family: 'Arial, Helvetica, sans-serif'},
+            margin: {
+                l: 100,
+                r: 100,
+                t: 120,
+                b: 50
+              },
+            xaxis: {title:"OTU ID"},
+            yaxis: {title:"Sample Values"},
+          };
 
-//           Plotly.newPlot("bubble", data, layout);
+          Plotly.newPlot("bubble", data, layout);
 
-
+    });
+};
 
  // fetch new data each time a new metadata ID is selected 
  function optionChanged(newValue){
