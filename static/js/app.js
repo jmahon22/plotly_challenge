@@ -2,7 +2,7 @@
 function demographicInfo(sample){
     
 // demographic info display
-    d3.json("data/samples.json").then((data) => {
+    d3.json("samples.json").then((data) => {
         console.log(data);
                
     var metaData = data.metadata;
@@ -28,7 +28,7 @@ function demographicInfo(sample){
   
 // drop down menu
 function DropDownMenu() {
-    d3.json("data/samples.json").then((data) => {
+    d3.json("samples.json").then((data) => {
         console.log(data);
   
     var metaDataID = data.metadata;
@@ -53,7 +53,7 @@ function DropDownMenu() {
 // //build charts
 // function buildPlot(sample){
   
-//     d3.json("data/samples.json").then((data) => {
+//     d3.json("samples.json").then((data) => {
 //         samples = data.samples;
 //         console.log(samples);
   
@@ -209,7 +209,7 @@ function DropDownMenu() {
 // // use first sample to build the initial html page Dashboard 
 // function init(){
   
-//     d3.json("data/samples.json").then((data) => {
+//     d3.json("samples.json").then((data) => {
 //         console.log(data);
   
 //         var firstSample = data.metadata.map(item => item.id);
