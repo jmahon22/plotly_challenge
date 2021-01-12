@@ -1,26 +1,26 @@
 // use D3 library to read in samples.json
-function demographicInfo(sample){
-    
 // demographic info display
+function demographicInfo(sample){
+
     d3.json("../samples.json").then((data) => {
-        console.log(data);
-               
+        // console.log(data);
+                
     var metaData = data.metadata;
-        console.log(metaData);
-          
+        // console.log(metaData);
+            
     // filter metadataID for results
     var metaDataID = metaData.filter(item => item.id == sample);
-        console.log(metaDataID);    
-  
+        // console.log(metaDataID);    
+
     // store and select #sample-metadata using d3    
-    var metaDataSelector = d3.select("#sample-metadata");
-          
-    // clear any existing metada
-    metaDataSelector.html(""); 
-  
+    var metaDataCategories = d3.select("#sample-metadata");
+            
+    // clear existing metadata
+    metaDataCategories.html(""); 
+
     // add each key and value pair to metaDataSelector
     Object.entries(metaDataID[0]).forEach(([key, value]) => {
-        metaDataSelector.append("p").text(`${key.toUpperCase()} : ${value}`);
+        metaDataCategories.append("p").text(`${key.toUpperCase()} : ${value}`);
     });
   
     });
@@ -29,13 +29,13 @@ function demographicInfo(sample){
 // drop down menu
 function DropDownMenu() {
     d3.json("../samples.json").then((data) => {
-        console.log(data);
+        // console.log(data);
   
-    var metaDataID = data.metadata;
+    var ID = data.metadata;
   
     // loop through IDs
-    var metaDataIDs = metaDataID.map(item => item.id);
-        console.log(metaDataIDs); 
+    var metaDataIDs = ID.map(item => item.id);
+        // console.log(metaDataIDs); 
   
     // store and select selDataset
     var results = d3.select("#selDataset");
@@ -55,25 +55,25 @@ function buildPlot(sample){
   
     d3.json("../samples.json").then((data) => {
         samples = data.samples;
-        console.log(samples);
+        // console.log(samples);
   
     // filter samples
-    var results = samples.filter(item => item.id == sample)
+    var filter_samples = samples.filter(item => item.id == sample)
   
     // assign the 1st value to result
-    var result = results[0];
+    var result = filter_samples[0];
     
     var sample_values = result.sample_values;
-        console.log(sample_values);
+        // console.log(sample_values);
 
     var otu_ids = result.otu_ids;
-        console.log(otu_ids);
+        // console.log(otu_ids);
     
     var otu_labels = result.otu_labels;
-         console.log(otu_labels);
+        //  console.log(otu_labels);
   
   
-    //bar chart
+    //BAR CHART
     var barchart = {
         x: sample_values.slice(0,10).reverse(),
         y: otu_ids.map(otu_ids => `OTU ${otu_ids}`).slice(0,10).reverse(),
@@ -81,7 +81,7 @@ function buildPlot(sample){
         type: "bar",
         orientation: "h",
         marker: {
-            color: 'rgb(142,124,195)',
+            color: 'rgb(29,125,94)',
         }
     };
           
@@ -89,22 +89,22 @@ function buildPlot(sample){
   
     var layout = {
         title: '<b> Belly Button Bacteria </b> <br> Top 10 Samples </b>',
-        titlefont: {family: 'Arial, Helvetica, sans-serif'},
+        titlefont: {family: 'Times New Roman, Times, sans-serif'},
         margin: {
             l: 100,
             r: 100,
-            t: 120,
-            b: 50
+            t: 110,
+            b: 60
         },
         xaxis: {title:"Sample Values"},
-        width: 500,
-        height: 600
+        width: 800,
+        height: 700
     };
   
     Plotly.newPlot("bar", data, layout);
   
   
-    //bubble chart
+    //BUBBLE CHART
     var bubblechart = {
         x: otu_ids,
         y: sample_values,
@@ -122,12 +122,12 @@ function buildPlot(sample){
   
     var layout = {
         title: "<b>Belly Button Bacteria</b> <br> Samples per OTU ID</b>",
-        titlefont: {family: 'Arial, Helvetica, sans-serif'},
+        titlefont: {family: 'Times New Roman, Times, sans-serif'},
         margin: {
             l: 100,
             r: 100,
-            t: 120,
-            b: 50
+            t: 150,
+            b: 70
         },
         xaxis: {title:"OTU ID"},
         yaxis: {title:"Sample Values"},
@@ -135,12 +135,11 @@ function buildPlot(sample){
   
     Plotly.newPlot("bubble", data, layout);
 
-    //gauge chart
-    d3.json("../samples.json").then((jen) => {
-        var metaData = jen.metadata;
+    //GAUGE CHART
+    d3.json("../samples.json").then((data1) => {
+        var metaData = data1.metadata;
         console.log("Here");
         console.log(metaData);
-    
 
     // filter metadataID for one or more results
     
