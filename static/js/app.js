@@ -81,7 +81,7 @@ function buildPlot(sample){
         type: "bar",
         orientation: "h",
         marker: {
-            color: 'rgb(29,125,94)',
+            color: 'rgb(55, 166, 64)',
         }
     };
           
@@ -138,73 +138,60 @@ function buildPlot(sample){
     //GAUGE CHART
     d3.json("../samples.json").then((data1) => {
         var metaData = data1.metadata;
-        console.log("Here");
-        console.log(metaData);
+        // console.log(metaData);
 
     // filter metadataID for one or more results
-    
-    var metaDataID = metaData.filter(item => item.id === sample);
-        // console.log('HERE');
-        console.log(metaDataID[0].wfreq); 
+        var metaDataID = metaData.filter(item => item.id === sample);
+        // console.log(metaDataID[0].wfreq); 
 
-    var gaugechart = [
-      {
-        domain: { x: [0, 1], y: [0, 1] },
-        value: metaDataID[0].wfreq,
-        title: { text: "<b>Belly Button Washing Frequency</b><br>Scrubs Per Week" },
-        titlefont: {family: 'Arial, Helvetica, sans-serif'},
+        var gaugechart = [
+        {
+            domain: { x: [0, 1], y: [0, 1] },
+            value: metaDataID[0].wfreq,
+            title: { text: "<b>Belly Button Washing Frequency</b><br>Scrubs Per Week" },
+            titlefont: {family: 'Times New Roman, Times, sans-serif'},
         
-        
-        // text: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9'],
-        // textinfo: 'text',
-        // textposition:'inside',
-        // textfont:{
-        //  size : 16,
-        // },
         
         type: "indicator",
         mode: "gauge+number",
         gauge: {
           axis: { range: [null, 10] },
-          bar: {color: "red"},
+          bar: {color: "maroon"},
           steps: [
-            { range: [0, 1], color: 'rgb(258, 250, 245)'},
-            { range: [1, 2], color: 'rgb(238, 235, 222)' },
-            { range: [2, 3], color: 'rgb(225, 225, 180)' },
-            { range: [3, 4], color: 'rgb(229, 231, 163)' },
-            { range: [4, 5], color: 'rgb(213, 228, 157)' },
-            { range: [5, 6], color: 'rgb(183, 204, 146)' },
-            { range: [6, 7], color: 'rgb(150, 191, 136)' },
-            { range: [7, 8], color: 'rgb(140, 185, 126)'  },
-            { range: [8, 9], color: 'rgb(128, 178, 112)' },
-            { range: [9, 10], color: 'rgb(110, 167, 108)' }
+            { range: [0, 1], color: 'rgb(127, 176, 130)'},
+            { range: [1, 2], color: 'rgb(116, 179, 120)' },
+            { range: [2, 3], color: 'rgb(103, 181, 108)' },
+            { range: [3, 4], color: 'rgb(81, 166, 87)' },
+            { range: [4, 5], color: 'rgb(59, 135, 65)' },
+            { range: [5, 6], color: 'rgb(40, 102, 45)' },
+            { range: [6, 7], color: 'rgb(28, 89, 33)' },
+            { range: [7, 8], color: 'rgb(18, 79, 23)'  },
+            { range: [8, 9], color: 'rgb(10, 69, 15)' },
+            { range: [9, 10], color: 'rgb(4, 64, 9)' }
           ],
       
         },
-    },
-      ];
+        },
+    ];
   
-    // var jen = gaugechart;
-
-    var layout = { width: 600, 
+    var layout = { width: 700, 
                 height: 500, 
                 margin: { t: 0, b: 0 } 
                 };
 
-    Plotly.newPlot('gauge', gaugechart, layout);
+    Plotly.newPlot("gauge", gaugechart, layout);
 
     });
 });
 };
   
  
- 
  // Get new data each time a new ID is selected 
 function optionChanged(newValue){
   
     demographicInfo(newValue);
-    buildPlot(newValue);
     DropDownMenu(newValue);
+    buildPlot(newValue);
 }
   
 
@@ -214,15 +201,15 @@ function init(){
     d3.json("samples.json").then((data) => {
         console.log(data);
   
-        var firstSample = data.metadata.map(item => item.id);
-              console.log(firstSample[0]);
+        var first_sample = data.metadata.map(item => item.id);
+              console.log(first_sample[0]);
   
-// Call other function in init to use the first sample to build initial plots, demographicInfo, menu option
-        DropDownMenu(firstSample[0]);
-        buildPlot(firstSample[0]);
-        demographicInfo(firstSample[0]);
+// call functions to use the first sample to build initial plots, demographic info, & dropdown menu
+        demographicInfo(first_sample[0]);        
+        DropDownMenu(first_sample[0]);
+        buildPlot(first_sample[0]);
     });
 };
   
-// Initialize the Dashboard
+// initialize dashboard
 init();
