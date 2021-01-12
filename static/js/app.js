@@ -190,7 +190,6 @@ function buildPlot(sample){
 function optionChanged(newValue){
   
     demographicInfo(newValue);
-    DropDownMenu(newValue);
     buildPlot(newValue);
 }
   
