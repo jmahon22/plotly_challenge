@@ -197,8 +197,8 @@ function optionChanged(newValue){
 // use first sample to build the initial html page Dashboard 
 function init(){
   
-    d3.json("samples.json").then((data) => {
-        console.log(data);
+    d3.json("../samples.json").then((data) => {
+        // console.log(data);
   
         var first_sample = data.metadata.map(item => item.id);
               console.log(first_sample[0]);
